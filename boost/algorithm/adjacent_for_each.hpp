@@ -13,11 +13,11 @@
 
 namespace boost { namespace algorithm {
 
-template<typename InputIterator, typename Function>
-Function adjacent_for_each(InputIterator first, InputIterator last, Function f)
+template<typename ForwardIterator, typename Function>
+Function adjacent_for_each(ForwardIterator first, ForwardIterator last, Function f)
 {
   if (first != last)
-    for (InputIterator next = first + 1; next != last; first++, next++)
+    for (ForwardIterator next = first; ++next != last; first++)
       f(*first, *next);
   return f;
 }

@@ -1,8 +1,8 @@
 Adjacent For Each
 =================
 
-    template<typename InputIterator, typename Function>
-    Function adjacent_for_each(InputIterator first, InputIterator last, Function f)
+    template<typename ForwardIterator, typename Function>
+    Function adjacent_for_each(ForwardIterator first, ForwardIterator last, Function f)
 
     template<typename Range, typename Function>
     Function adjacent_for_each(const Range& range, Function f)

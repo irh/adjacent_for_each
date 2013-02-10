@@ -6,6 +6,7 @@
 */
 
 #include <algorithm>
+#include <list>
 #include <vector>
 
 #include <boost/algorithm/adjacent_for_each.hpp>
@@ -43,13 +44,13 @@ BOOST_AUTO_TEST_CASE(adjacent_for_each_test_const)
 {
   BOOST_CHECK_EQUAL(
     0,
-    ba::adjacent_for_each(std::vector<int>(), CheckAdjacentElements()).index_);
+    ba::adjacent_for_each(std::list<int>(), CheckAdjacentElements()).index_);
 
   BOOST_CHECK_EQUAL(
     0,
-    ba::adjacent_for_each(std::vector<int>(1), CheckAdjacentElements()).index_);
+    ba::adjacent_for_each(std::list<int>(1), CheckAdjacentElements()).index_);
 
-  const std::vector<int> v = boost::assign::list_of(0)(1)(2)(3)(4);
+  const std::list<int> v = boost::assign::list_of(0)(1)(2)(3)(4);
 
   const CheckAdjacentElements::IntPairs expected = boost::assign::list_of
     (std::make_pair(0, 1))
@@ -71,16 +72,16 @@ BOOST_AUTO_TEST_CASE(adjacent_for_each_test_const)
 
 BOOST_AUTO_TEST_CASE(adjacent_for_each_test_non_const)
 {
-  std::vector<int> v = boost::assign::list_of(0)(1)(2)(3)(4);
+  std::list<int> v = boost::assign::list_of(0)(1)(2)(3)(4);
 
   ba::adjacent_for_each(v, std::swap<int>);
 
-  const std::vector<int> expected = boost::assign::list_of(1)(2)(3)(4)(0);
+  const std::list<int> expected = boost::assign::list_of(1)(2)(3)(4)(0);
   BOOST_CHECK_EQUAL_COLLECTIONS(v.begin(), v.end(), expected.begin(), expected.end());
 
   ba::adjacent_for_each(v.begin(), v.end(), std::swap<int>);
 
-  const std::vector<int> expected2 = boost::assign::list_of(2)(3)(4)(0)(1);
+  const std::list<int> expected2 = boost::assign::list_of(2)(3)(4)(0)(1);
   BOOST_CHECK_EQUAL_COLLECTIONS(v.begin(), v.end(), expected2.begin(), expected2.end());
 }
 
