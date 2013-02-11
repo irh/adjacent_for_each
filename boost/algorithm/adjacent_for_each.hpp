@@ -8,6 +8,7 @@
 #ifndef BOOST_ALGORITHM_ADJACENT_FOR_EACH_HPP
 #define BOOST_ALGORITHM_ADJACENT_FOR_EACH_HPP
 
+#include <boost/utility.hpp>
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 
@@ -17,7 +18,7 @@ template<typename ForwardIterator, typename Function>
 Function adjacent_for_each(ForwardIterator first, ForwardIterator last, Function f)
 {
   if (first != last)
-    for (ForwardIterator next = first; ++next != last; first++)
+    for (ForwardIterator next = boost::next(first); next != last; ++first, ++next)
       f(*first, *next);
   return f;
 }
