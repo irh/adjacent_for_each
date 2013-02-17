@@ -8,19 +8,44 @@
 #ifndef BOOST_ALGORITHM_ADJACENT_FOR_EACH_HPP
 #define BOOST_ALGORITHM_ADJACENT_FOR_EACH_HPP
 
+#include <iterator>
 #include <boost/utility.hpp>
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 
 namespace boost { namespace algorithm {
 
-template<typename ForwardIterator, typename Function>
-Function adjacent_for_each(ForwardIterator first, ForwardIterator last, Function f)
+template<typename Iterator, typename Function>
+Function adjacent_for_each(Iterator first, Iterator last, Function f,
+  std::forward_iterator_tag)
 {
   if (first != last)
-    for (ForwardIterator next = boost::next(first); next != last; ++first, ++next)
+    for (Iterator next = boost::next(first); next != last; ++first, ++next)
       f(*first, *next);
   return f;
+}
+
+template<typename Iterator, typename Function>
+Function adjacent_for_each(Iterator first, Iterator last, Function f,
+  std::input_iterator_tag)
+{
+  if (first != last) {
+    typename std::iterator_traits<Iterator>::value_type previous = *first++;
+    while (first != last) {
+      typename std::iterator_traits<Iterator>::value_type current = *first++;
+      f(previous, current);
+      previous = current;
+    }
+  }
+  return f;
+}
+
+template<typename Iterator, typename Function>
+Function adjacent_for_each(Iterator first, Iterator last, Function f)
+{
+  return adjacent_for_each(
+    first, last, f,
+    typename std::iterator_traits<Iterator>::iterator_category());
 }
 
 template<typename Range, typename Function>
