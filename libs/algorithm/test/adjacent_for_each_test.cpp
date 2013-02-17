@@ -77,11 +77,13 @@ BOOST_AUTO_TEST_CASE(adjacent_for_each_test_non_const)
   ba::adjacent_for_each(v, std::swap<int>);
 
   const std::list<int> expected = boost::assign::list_of(1)(2)(3)(4)(0);
-  BOOST_CHECK_EQUAL_COLLECTIONS(v.begin(), v.end(), expected.begin(), expected.end());
+  BOOST_CHECK_EQUAL_COLLECTIONS(
+    v.begin(), v.end(), expected.begin(), expected.end());
 
   ba::adjacent_for_each(v.begin(), v.end(), std::swap<int>);
 
   const std::list<int> expected2 = boost::assign::list_of(2)(3)(4)(0)(1);
-  BOOST_CHECK_EQUAL_COLLECTIONS(v.begin(), v.end(), expected2.begin(), expected2.end());
+  BOOST_CHECK_EQUAL_COLLECTIONS(
+    v.begin(), v.end(), expected2.begin(), expected2.end());
 }
 
